@@ -15,7 +15,7 @@ const eb_garamond = EB_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: "Ping Panda",
+  title: "Ping Alert",
   description: "Ping any events to your Discord",
   icons: [{ rel: "icon", url: "/brand-asset-profile-picture.png" }],
 }
