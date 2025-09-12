@@ -17,33 +17,34 @@ const config: Config = {
         ]
       },
       colors: {
-        // --- NEW ORANGE-DOMINANT PALETTE ---
-        // 'brand' is now a custom Orange scale
+        // --- MODERN AURORA PALETTE ---
+        // 'brand' - Deep Ocean Blue with vibrant accents
         brand: {
-          '25': '#fffaf0', // Very light creamy orange
-          '50': '#fff0e0',
-          '100': '#ffe0c0',
-          '200': '#ffc299',
-          '300': '#ffa670',
-          '400': '#ff8a47',
-          '500': '#ff6e1d', // A vibrant, clear orange
-          '600': '#e05c0d',
-          '700': '#bf4a00',
-          '800': '#993a00',
-          '900': '#7a2d00',
-          '950': '#5c2000'
+          '25': '#f0f9ff', // Lightest sky blue
+          '50': '#e0f2fe', // Very light cyan
+          '100': '#bae6fd', // Light sky blue
+          '200': '#7dd3fc', // Medium sky blue
+          '300': '#38bdf8', // Bright sky blue
+          '400': '#0ea5e9', // Vivid blue
+          '500': '#0284c7', // Deep ocean blue (primary)
+          '600': '#0369a1', // Darker ocean blue
+          '700': '#075985', // Deep navy blue
+          '800': '#0c4a6e', // Very dark blue
+          '900': '#083344', // Nearly black blue
+          '950': '#0a1f2e'  // Darkest navy
         },
-        // Discord colors re-imagined for the warm, orange-dominant theme
-        'discord-background': "#332e2c", // Dark warm gray/brown
-        'discord-brand-color': "#e07a5f", // Muted terracotta orange
-        'discord-gray': '#453f3d', // Slightly different dark warm gray
-        'discord-text': '#f5f0ed', // Light creamy text
-        'discord-timestamp': '#c2bbb6', // Medium warm gray
 
-        // 'dark-background' is now a deep, rich brown (no black)
-        'dark-background': "#1a1614",
+        // Modern Discord-inspired dark theme
+        'discord-background': "#1a1b23", // Rich dark blue-gray
+        'discord-brand-color': "#5865f2", // Discord's signature purple-blue
+        'discord-gray': '#2c2f36', // Medium dark gray
+        'discord-text': '#f2f3f5', // Clean white text
+        'discord-timestamp': '#a3a6aa', // Subtle gray for timestamps
 
-        // Dynamic HSL colors for flexibility and dark mode (all new, no blue/black)
+        // Premium dark background - deep charcoal with blue undertones
+        'dark-background': "#0f0f14",
+
+        // Sophisticated HSL color system
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -55,42 +56,83 @@ const config: Config = {
           foreground: 'hsl(var(--popover-foreground))'
         },
         primary: {
-          DEFAULT: 'hsl(25 90% 50%)', // Our main vibrant Orange
-          foreground: 'hsl(0 0% 100%)' // White text for strong contrast
+          DEFAULT: 'hsl(201 96% 32%)', // Deep ocean blue - professional yet vibrant
+          foreground: 'hsl(0 0% 100%)' // Crisp white text
         },
         secondary: {
-          DEFAULT: 'hsl(30 15% 90%)', // A soft, light, desaturated warm gray
-          foreground: 'hsl(30 10% 20%)' // Deep brown-gray text
+          DEFAULT: 'hsl(210 40% 96%)', // Ultra-light blue-gray
+          foreground: 'hsl(210 15% 25%)' // Deep blue-gray text
         },
         muted: {
-          DEFAULT: 'hsl(30 10% 96%)', // Very light, subtle warm beige
-          foreground: 'hsl(30 8% 45%)' // Medium warm gray for muted text
+          DEFAULT: 'hsl(210 25% 97%)', // Whisper-light blue-white
+          foreground: 'hsl(210 15% 50%)' // Balanced gray for muted content
         },
         accent: {
-          DEFAULT: 'hsl(350 80% 45%)', // A rich, deep red/maroon for strong accents
-          foreground: 'hsl(0 0% 100%)' // White text on accent
+          DEFAULT: 'hsl(262 83% 58%)', // Electric purple - modern and eye-catching
+          foreground: 'hsl(0 0% 100%)' // Clean white on purple
         },
         destructive: {
-          DEFAULT: 'hsl(0 75% 55%)', // A standard, impactful red for warnings/errors
-          foreground: 'hsl(0 0% 100%)' // White text
+          DEFAULT: 'hsl(0 84% 60%)', // Vibrant red for alerts
+          foreground: 'hsl(0 0% 100%)' // White text on red
         },
-        border: 'hsl(30 10% 85%)', // A light, warm border
-        input: 'hsl(30 10% 85%)', // Input border
-        ring: 'hsl(25 90% 50%)', // Focus ring matches primary orange
+        border: 'hsl(214 32% 91%)', // Soft blue-gray border
+        input: 'hsl(214 32% 91%)', // Matching input borders
+        ring: 'hsl(201 96% 32%)', // Focus ring matches primary
 
-        // Chart colors adjusted for harmony with the new warm palette
+        // Success and warning colors for better UX
+        success: {
+          DEFAULT: 'hsl(142 71% 45%)', // Fresh green
+          foreground: 'hsl(0 0% 100%)'
+        },
+        warning: {
+          DEFAULT: 'hsl(45 93% 47%)', // Warm amber
+          foreground: 'hsl(45 30% 11%)'
+        },
+
+        // Enhanced chart colors for data visualization
         chart: {
-          '1': 'hsl(25 80% 45%)',  // Orange (Primary related)
-          '2': 'hsl(50 90% 55%)',  // Golden Yellow
-          '3': 'hsl(350 70% 50%)', // Rich Red (Accent related)
-          '4': 'hsl(180 50% 40%)', // Muted Teal (a subtle, non-dominant cool contrast)
-          '5': 'hsl(300 50% 50%)'  // Dusty Plum
+          '1': 'hsl(201 96% 32%)',  // Primary blue
+          '2': 'hsl(262 83% 58%)',  // Electric purple  
+          '3': 'hsl(142 71% 45%)',  // Fresh green
+          '4': 'hsl(45 93% 47%)',   // Warm amber
+          '5': 'hsl(348 83% 47%)',  // Coral red
+          '6': 'hsl(193 82% 31%)',  // Teal
+          '7': 'hsl(271 81% 56%)',  // Violet
+          '8': 'hsl(29 94% 54%)',   // Orange
+        },
+
+        // Gradient stops for modern effects
+        gradient: {
+          'aurora-start': 'hsl(201 96% 32%)',
+          'aurora-middle': 'hsl(262 83% 58%)',
+          'aurora-end': 'hsl(193 82% 31%)',
         }
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
+      },
+      // Modern box shadows for depth
+      boxShadow: {
+        'aurora': '0 0 40px -10px hsl(201 96% 32% / 0.3)',
+        'aurora-lg': '0 0 60px -15px hsl(201 96% 32% / 0.4)',
+        'glow': '0 0 20px -5px hsl(262 83% 58% / 0.5)',
+      },
+      // Subtle animations
+      animation: {
+        'aurora': 'aurora 6s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+      },
+      keyframes: {
+        aurora: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.8' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 20px -5px hsl(262 83% 58% / 0.5)' },
+          '100%': { boxShadow: '0 0 25px -5px hsl(262 83% 58% / 0.7)' },
+        }
       }
     }
   },
