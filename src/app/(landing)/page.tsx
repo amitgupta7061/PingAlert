@@ -33,19 +33,6 @@ export default async function Home() {
                   Instant notifications.
                 </div>
               </div>
-
-              <div className="mt-4 flex items-center gap-2 text-sm text-gray-500">
-                <div className="flex -space-x-1">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="size-4 text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <span>Rated 4.8 by 10,000+ developers</span>
-              </div>
-              
-              <div className="text-sm font-medium text-brand-600">
-                Created by PingAlert. Made with ❤️ in India. 🇮🇳
-              </div>
             </div>
 
             <div className="relative flex flex-col items-center justify-center">
