@@ -19,7 +19,6 @@ const eb_garamond = EB_Garamond({
 export const metadata: Metadata = {
   title: "Ping Alert",
   description: "Ping any events to your Discord",
-  icons: [{ rel: "icon", url: "/brand-asset-profile-picture.png" }],
 }
 
 export default function RootLayout({
