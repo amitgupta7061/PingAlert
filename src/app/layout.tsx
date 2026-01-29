@@ -14,6 +14,8 @@ const eb_garamond = EB_Garamond({
   variable: "--font-heading",
 })
 
+// text
+
 export const metadata: Metadata = {
   title: "Ping Alert",
   description: "Ping any events to your Discord",
