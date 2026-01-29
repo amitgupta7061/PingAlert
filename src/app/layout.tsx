@@ -28,12 +28,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      localization={{
+        signIn: { start: { title: "Sign in to PingAlert" } },
+        signUp: { start: { title: "Sign up for PingAlert" } },
+      }}
+    >
       <html lang="en" className={cn(inter.variable, eb_garamond.variable)}>
         <body className="min-h-[calc(100vh-1px)] flex flex-col font-sans bg-brand-50 dark:bg-dark-background text-brand-950 antialiased">
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >

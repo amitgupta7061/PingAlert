@@ -18,20 +18,20 @@ const config: Config = {
       },
       colors: {
         // --- MODERN AURORA PALETTE ---
-        // 'brand' - Deep Ocean Blue with vibrant accents
+        // 'brand' - PingAlert Green
         brand: {
-          '25': '#f0f9ff', // Lightest sky blue
-          '50': '#e0f2fe', // Very light cyan
-          '100': '#bae6fd', // Light sky blue
-          '200': '#7dd3fc', // Medium sky blue
-          '300': '#38bdf8', // Bright sky blue
-          '400': '#0ea5e9', // Vivid blue
-          '500': '#0284c7', // Deep ocean blue (primary)
-          '600': '#0369a1', // Darker ocean blue
-          '700': '#075985', // Deep navy blue
-          '800': '#0c4a6e', // Very dark blue
-          '900': '#083344', // Nearly black blue
-          '950': '#0a1f2e'  // Darkest navy
+          '25': '#f0fdf4', // Lightest green
+          '50': '#f0fdf4', 
+          '100': '#dcfce7', 
+          '200': '#bbf7d0', 
+          '300': '#86efac', 
+          '400': '#4ade80', 
+          '500': '#22c55e', // Primary Green
+          '600': '#16a34a', 
+          '700': '#15803d', 
+          '800': '#166534', 
+          '900': '#14532d', 
+          '950': '#052e16'
         },
 
         // Modern Discord-inspired dark theme

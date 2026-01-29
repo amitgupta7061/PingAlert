@@ -58,22 +58,24 @@ export const DashboardPageContent = () => {
           >
             <div className="absolute z-0 inset-px rounded-lg bg-white" />
 
-            <div className="pointer-events-none z-0 absolute inset-px rounded-lg shadow-sm transition-all duration-300 group-hover:shadow-md ring-1 ring-black/5" />
+            <div className="pointer-events-none z-0 absolute inset-px rounded-lg border border-gray-200 shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-brand-500/50" />
 
             <div className="relative p-6 z-10">
               <div className="flex items-center gap-4 mb-6">
                 <div
-                  className="size-12 rounded-full"
+                  className="size-12 rounded-full flex items-center justify-center bg-gray-50 border border-gray-100 ring-4 ring-white"
                   style={{
-                    backgroundColor: category.color
+                    color: category.color
                       ? `#${category.color.toString(16).padStart(6, "0")}`
-                      : "#f3f4f6",
+                      : "#22c55e", // Use brand green as default fallback
                   }}
-                />
+                >
+                    <span className="text-2xl">{category.emoji || "📂"}</span>
+                </div>
 
                 <div>
                   <h3 className="text-lg/7 font-medium tracking-tight text-gray-950">
-                    {category.emoji || "📂"} {category.name}
+                    {category.name}
                   </h3>
                   <p className="text-sm/6 text-gray-600">
                     {format(category.createdAt, "MMM d, yyyy")}
@@ -109,7 +111,7 @@ export const DashboardPageContent = () => {
                   className={buttonVariants({
                     variant: "outline",
                     size: "sm",
-                    className: "flex items-center gap-2 text-sm dark:bg-zinc-50 dark:hover:bg-zinc-200 dark:hover:text-zinc-950",
+                    className: "flex items-center gap-2 text-sm bg-gray-50 hover:bg-gray-100 text-gray-900 hover:text-gray-900 border-gray-200",
                   })}
                 >
                   View all <ArrowRight className="size-4" />
@@ -117,7 +119,7 @@ export const DashboardPageContent = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-gray-500 hover:text-red-600 transition-colors dark:hover:bg-zinc-200"
+                  className="text-gray-500 hover:text-red-600 transition-colors"
                   aria-label={`Delete ${category.name} category`}
                   onClick={() => setDeletingCategory(category.name)}
                 >

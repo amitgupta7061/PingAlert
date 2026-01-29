@@ -91,7 +91,7 @@ export const CategoryPageContent = ({
       {
         accessorKey: "category",
         header: "Category",
-        cell: () => <span className="dark:text-zinc-900">{category.name || "Uncategorized"}</span>,
+        cell: () => <span>{category.name || "Uncategorized"}</span>,
       },
       {
         accessorKey: "createdAt",

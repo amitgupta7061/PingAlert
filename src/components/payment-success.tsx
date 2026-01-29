@@ -2,7 +2,7 @@
 
 import { client } from '@/lib/client'
 import { useQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Modal } from './ui/model'
 import { LoadingSpinner } from './loading-spinner'
@@ -65,7 +65,7 @@ export const PaymentSuccessModal = () => {
                 Upgrade successful! 🎉
               </p>
               <p className='text-gray-600 text-sm/6 text-pretty'>
-                Thank you for upgrading to Pro and supporting PingPanda. Your account has been upgraded.
+                Thank you for upgrading to Pro and supporting PingAlert. Your account has been upgraded.
               </p>
             </div>
 

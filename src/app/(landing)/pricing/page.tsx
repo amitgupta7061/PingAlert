@@ -45,7 +45,7 @@ const Page = () => {
           <Heading className="text-center">Simple no-tricks pricing</Heading>
           <p className="mt-6 text-base/7 text-gray-600 max-w-prose text-center text-pretty dark:text-zinc-400">
             We hate subscriptions. And chances are, you do too. That's why we
-            offer lifetime access to PingPanda for a one-time payment.
+            offer lifetime access to PingAlert for a one-time payment.
           </p>
         </div>
 
@@ -56,7 +56,7 @@ const Page = () => {
             </h3>
 
             <p className="mt-6 text-base/7 text-gray-600 dark:text-zinc-400">
-              Invest once in PingPanda and transform how you monitor your SaaS
+              Invest once in PingAlert and transform how you monitor your SaaS
               forever. Get instant alerts, track critical metrics and never miss
               a beat in your business growth.
             </p>
@@ -93,7 +93,7 @@ const Page = () => {
                 </p>
 
                 <Button onClick={handleGetAccess} className="mt-6 px-20">
-                  Get PingPanda
+                  Get PingAlert
                 </Button>
                 <p className="mt-6 text-xs leading-5 text-gray-600">
                   Secure payment. Start monitoring in minutes.
