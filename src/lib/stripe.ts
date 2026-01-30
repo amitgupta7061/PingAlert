@@ -12,15 +12,22 @@ export const createCheckoutSession = async ({
   userEmail: string,
   userId: string
 }) => {
+  const priceId = process.env.STRIPE_PRICE_ID
+
+  if (!priceId) {
+    throw new Error("STRIPE_PRICE_ID is not configured")
+  }
+
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
-        price: "price_1Qb1kTRsozxOSNhLUBUCa7kg",
+        price: priceId,
         quantity: 1,
       },
     ],
     mode: "payment",
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?success=true`,
+    // Include session_id so we can verify payment directly
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/upgrade?success=true&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
     customer_email: userEmail,
     metadata: {
@@ -29,4 +36,3 @@ export const createCheckoutSession = async ({
   })
   return session
 }
-

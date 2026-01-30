@@ -6,6 +6,7 @@ import { z } from "zod"
 import { CATEGORY_NAME_VALIDATOR } from "@/lib/validators/category-validator"
 import { parseColor } from "@/utils"
 import { HTTPException } from "hono/http-exception"
+import { FREE_QUOTA, PRO_QUOTA } from "@/config"
 
 export const categoryRouter = router({
   getEventCategories: privateProcedure.query(async ({ c, ctx }) => {
@@ -95,7 +96,18 @@ export const categoryRouter = router({
       const { user } = ctx
       const { color, name, emoji } = input
 
-      // TODO: ADD PAID PLAN LOGIC
+      // Check category limit based on user's plan
+      const categoryCount = await db.eventCategory.count({
+        where: { userId: user.id },
+      })
+
+      const limits = user.plan === "PRO" ? PRO_QUOTA : FREE_QUOTA
+
+      if (categoryCount >= limits.maxEventsCategories) {
+        throw new HTTPException(403, {
+          message: `Category limit reached. ${user.plan === "FREE" ? "Please upgrade to Pro to create more categories." : "You have reached the maximum number of categories."}`,
+        })
+      }
 
       const eventCategory = await db.eventCategory.create({
         data: {
@@ -110,14 +122,39 @@ export const categoryRouter = router({
     }),
 
   insertQuickstartCategories: privateProcedure.mutation(async ({ ctx, c }) => {
+    const { user } = ctx
+
+    // Check existing categories count
+    const existingCount = await db.eventCategory.count({
+      where: { userId: user.id },
+    })
+
+    // If user already has categories, don't add quickstart ones
+    if (existingCount > 0) {
+      return c.json({ success: true, count: 0, message: "User already has categories" })
+    }
+
+    const limits = user.plan === "PRO" ? PRO_QUOTA : FREE_QUOTA
+    const remainingSlots = limits.maxEventsCategories - existingCount
+
+    // Define quickstart categories
+    const quickstartCategories = [
+      { name: "bug", emoji: "🐛", color: 0xff6b6b },
+      { name: "sale", emoji: "💰", color: 0xffeb3b },
+      { name: "question", emoji: "🤔", color: 0x6c5ce7 },
+    ]
+
+    // Only insert as many categories as the remaining quota allows
+    const categoriesToInsert = quickstartCategories.slice(0, remainingSlots)
+
+    if (categoriesToInsert.length === 0) {
+      return c.json({ success: false, count: 0, message: "Category limit reached" })
+    }
+
     const categories = await db.eventCategory.createMany({
-      data: [
-        { name: "bug", emoji: "🐛", color: 0xff6b6b },
-        { name: "sale", emoji: "💰", color: 0xffeb3b },
-        { name: "question", emoji: "🤔", color: 0x6c5ce7 },
-      ].map((category) => ({
+      data: categoriesToInsert.map((category) => ({
         ...category,
-        userId: ctx.user.id,
+        userId: user.id,
       })),
     })
 

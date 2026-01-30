@@ -12,6 +12,8 @@ import { Input } from "./ui/input"
 import { cn } from "@/utils"
 import { Button } from "./ui/button"
 import { client } from "@/lib/client"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const EVENT_CATEGORY_VALIDATOR = z.object({
   name: CATEGORY_NAME_VALIDATOR,
@@ -60,14 +62,37 @@ export const CreateEventCategoryModal = ({
 }: CreateEventCategoryModel) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   const { mutate: createEventCategory, isPending } = useMutation({
     mutationFn: async (data: EventCategoryForm) => {
-      await client.category.createEventCategory.$post(data)
+      const res = await client.category.createEventCategory.$post(data)
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        throw new Error((errorData as { message?: string })?.message || "Failed to create category")
+      }
+      return res.json()
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user-event-categories"] })
       setIsOpen(false)
+    },
+    onError: (error) => {
+      const message = error.message || "Failed to create category"
+      
+      // Check if it's a limit reached error
+      if (message.toLowerCase().includes("limit") || message.toLowerCase().includes("upgrade")) {
+        toast.error("Category Limit Reached", {
+          description: "You've reached the maximum categories for your plan.",
+          action: {
+            label: "Upgrade to Pro",
+            onClick: () => router.push("/dashboard/upgrade"),
+          },
+          duration: 5000,
+        })
+      } else {
+        toast.error(message)
+      }
     },
   })
 

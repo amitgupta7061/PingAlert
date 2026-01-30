@@ -3,13 +3,61 @@
 import { Card } from "@/components/ui/card"
 import { client } from "@/lib/client"
 import { Plan } from "@prisma/client"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { format } from "date-fns"
-import { BarChart } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { BarChart, CheckCircle, Loader2 } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
-export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
+export const UpgradePageContent = ({ plan: initialPlan }: { plan: Plan }) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const queryClient = useQueryClient()
+  const [currentPlan, setCurrentPlan] = useState<Plan>(initialPlan)
+  const [isVerifying, setIsVerifying] = useState(false)
+
+  // Mutation to verify session and upgrade user
+  const { mutate: verifySession } = useMutation({
+    mutationFn: async (sessionId: string) => {
+      const res = await client.payment.verifySession.$post({ sessionId })
+      return await res.json() as { success: boolean; message: string; plan?: string }
+    },
+    onSuccess: (data) => {
+      if (data.success && data.plan === "PRO") {
+        setCurrentPlan("PRO")
+        toast.success("Welcome to Pro! 🎉", {
+          description: "Your account has been upgraded successfully.",
+          duration: 5000,
+        })
+        // Invalidate queries to refresh usage data
+        queryClient.invalidateQueries({ queryKey: ["usage"] })
+        queryClient.invalidateQueries({ queryKey: ["user-plan"] })
+      }
+      // Clean up the URL
+      router.replace("/dashboard/upgrade")
+      setIsVerifying(false)
+    },
+    onError: () => {
+      toast.error("Failed to verify payment. Please contact support.")
+      router.replace("/dashboard/upgrade")
+      setIsVerifying(false)
+    },
+  })
+
+  // Verify session when returning from Stripe
+  useEffect(() => {
+    const sessionId = searchParams.get("session_id")
+    const success = searchParams.get("success")
+    
+    if (success === "true" && sessionId && currentPlan !== "PRO") {
+      setIsVerifying(true)
+      verifySession(sessionId)
+    } else if (success === "true" && currentPlan === "PRO") {
+      // Already PRO, just clean up URL
+      router.replace("/dashboard/upgrade")
+    }
+  }, [searchParams, currentPlan, verifySession, router])
 
   const { mutate: createCheckoutSession } = useMutation({
     mutationFn: async () => {
@@ -32,11 +80,16 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
   return (
     <div className="max-w-3xl flex flex-col gap-8">
       <div>
-        <h1 className="mt-2 text-xl/8 font-medium tracking-tight text-zinc-900">
-          {plan === "PRO" ? "Plan: Pro" : "Plan: Free"}
-        </h1>
+        <div className="flex items-center gap-2">
+          <h1 className="mt-2 text-xl/8 font-medium tracking-tight text-zinc-900">
+            {currentPlan === "PRO" ? "Plan: Pro" : "Plan: Free"}
+          </h1>
+          {currentPlan === "PRO" && (
+            <CheckCircle className="size-5 text-green-500 mt-2" />
+          )}
+        </div>
         <p className="text-sm/6 text-gray-600 dark:text-zinc-700 max-w-prose">
-          {plan === "PRO"
+          {currentPlan === "PRO"
             ? "Thank you for supporting PingAlert. Find your increased usage limits below."
             : "Get access to more events, categories and premium support."}
         </p>
@@ -82,7 +135,7 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
         ) : (
           <span className="animate-pulse w-8 h-4 bg-gray-200"></span>
         )}
-        {plan !== "PRO" ? (
+        {currentPlan !== "PRO" ? (
           <span
             onClick={() => createCheckoutSession()}
             className="inline cursor-pointer underline text-brand-600"
@@ -95,3 +148,4 @@ export const UpgradePageContent = ({ plan }: { plan: Plan }) => {
     </div>
   )
 }
+
